@@ -28,10 +28,21 @@ app.patch("/lists/:id",(req,res)=>{
     }
 });
 
+app.put("/lists/:id",(req,res)=>{
+    const items = lists.find(i=>i.id==req.params.id);
+    if(items){
+        items.name = req.body.name;
+        res.json(items);
+    }else{
+        res.status(404).json({message:"Item not found"});
+    }
+});
+
 app.delete("/lists/:id",(req,res)=>{
     lists = lists.filter(i=>i.id!=req.params.id);
     res.json({message:"Item deleted"});
 });
+
 
 const PORT = 5001;
 app.listen(PORT, ()=> console.log(`engine start on port ${PORT}`));
